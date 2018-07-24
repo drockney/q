@@ -17,7 +17,7 @@
 # Keyboard settings
 PID="DK5QPID" # product ID
 ZONEID="KEY_Q" # Key to colorize
-KEYCOLOR="#F00" # I see a blank key and I want to paint it red
+KEYCOLOR="F00" # I see a blank key and I want to paint it red
 EFFECT="BREATHE" 
 
 # Keyboard API settings
@@ -28,6 +28,49 @@ APIURL="http://localhost:$PORT/api/1.0/signals"
 REMOTEURL="https://q.daskeyboard.com" # site to check
 QNAME="Q API down"
 SLEEPYTIME=600 # Wait 10 minutes before checking again
+
+function printHelp () {
+      echo "$0 - watch a URL for a bad return code and change a key on a Das Keyboard 5Q"
+      echo "Usage:"
+      echo "    $0 -h"
+      echo "			Display this help message."
+      echo "    $0 -c <HEXCOLOR>"
+      echo "			Color to change the key to, minus the octothorpe (defaults to $KEYCOLOR)"
+      echo "    $0 -k <ZONEID>"
+      echo "			5Q keyboard code we will be changing (defaults to $ZONEID)"
+      echo "			see https://www.daskeyboard.io/q-api-doc/ for more info"
+      echo "    $0 -t <seconds>"
+      echo "			Wait <seconds> between checking <URL> state"
+      echo "    $0 -u <URL>"
+      echo "			Watch <URL> for error states."
+}
+
+# Check if the user wanted to have an argument or two
+while getopts ":hc:k:t:u:" opt; do
+  case ${opt} in
+    h )
+      printHelp
+      exit 0
+      ;;
+    c )
+      KEYCOLOR=$OPTARG
+      ;;
+    k )
+      ZONEID=$OPTARG
+      ;;
+    t )
+      SLEEPYTIME=$OPTARG
+      ;;
+    u )
+      REMOTEURL=$OPTARG
+      ;;
+    \? )
+     echo "Invalid Option: -$OPTARG" 1>&2
+     printHelp
+     exit 1
+     ;;
+  esac
+done
 
 echo Checking $REMOTEURL every $(($SLEEPYTIME / 60)) minutes to make sure it is running...
 while [ true ] ; do
@@ -42,7 +85,7 @@ while [ true ] ; do
 		curl -s -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{
 		    "pid": "'"$PID"'",
 		    "zoneId": "'"$ZONEID"'",
-		    "color": "'"$KEYCOLOR"'",
+		    "color": "#'"$KEYCOLOR"'",
 		    "effect": "'"$EFFECT"'",
 		    "name": "'"$QNAME"'",
 		    "message": "Message sent by script '$0'"

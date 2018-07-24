@@ -26,7 +26,7 @@ echo -n ' '
 for i in `seq 0 $(( $kbdcolumns - 1 ))` ; do
 	echo -n '>'
 	for j in `seq 0 $(( $kbdrows - 1 ))` ; do
-		curl -s -X DELETE http://localhost:27301/api/1.0/signals/zoneId/$i,$j 2>&1 > /dev/null
+		curl -s -X DELETE http://localhost:27301/api/1.0/signals/pid/DK5QPID/zoneId/$i,$j 2>&1 > /dev/null &
 	done
 done
 echo ''
