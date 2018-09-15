@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # -----------------------------------
-# clear-keyboard.sh
+# gradient.sh
 # Doug Rockney
 # https://github.com/drockney/q
 # v0.1 September 14, 2018
