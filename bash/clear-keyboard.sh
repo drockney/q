@@ -23,10 +23,13 @@ done
 echo ']'
 
 echo -n ' '
+array=()
 for i in `seq 0 $(( $kbdcolumns - 1 ))` ; do
 	echo -n '>'
 	for j in `seq 0 $(( $kbdrows - 1 ))` ; do
-		curl -s -X DELETE http://localhost:27301/api/1.0/signals/pid/DK5QPID/zoneId/$i,$j 2>&1 > /dev/null &
+		array+=(-X DELETE http://localhost:27301/api/1.0/signals/pid/DK5QPID/zoneId/$i,$j )
+		# curl -s -X DELETE http://localhost:27301/api/1.0/signals/pid/DK5QPID/zoneId/$i,$j 2>&1 > /dev/null &
 	done
 done
+curl -s "${array[@]}" > /dev/null
 echo ''

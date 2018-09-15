@@ -142,9 +142,9 @@ done
 array+=(--next -X DELETE ${APIURL}/pid/${PID}/zoneId/KEY_SPC)
 array+=(--next -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{
         "pid": "'"$PID"'",
-        "zoneId": "KEY_SPC",
+        "zoneId": "5,7",
         "color": "#'"$spacebarcolor"'",
         "effect": "SET_COLOR"
 }' "$APIURL")
 echo ". complete.  Starting shift from $KEYSTARTCOLOR to $KEYENDCOLOR."
-curl -s "${array[@]}" > /dev/null
+curl -s "${array[@]}" 
