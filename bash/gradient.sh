@@ -147,4 +147,4 @@ array+=(--next -X POST --header 'Content-Type: application/json' --header 'Accep
         "effect": "SET_COLOR"
 }' "$APIURL")
 echo ". complete.  Starting shift from $KEYSTARTCOLOR to $KEYENDCOLOR."
-curl -s "${array[@]}" 
+curl -s "${array[@]}" > /dev/null
